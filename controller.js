@@ -34,6 +34,7 @@ permission_groups = {
         permissions.READ_ATTR,
         permissions.READ_EXTENDED_ATTR,
         permissions.READ_PERMS,
+        // permissions.EXECUTE,
     ],
     Write: [
         permissions.WRITE_DATA,
@@ -41,22 +42,26 @@ permission_groups = {
         permissions.WRITE_ATTR,
         permissions.WRITE_EXTENDED_ATTR,
     ],
-    Read_Execute: [
+    Delete: [
+        permissions.DELETE,
+        permissions.DELETE_SUB,
+    ],
+    Execute: [
         permissions.LIST,
         permissions.READ_ATTR,
         permissions.READ_EXTENDED_ATTR,
         permissions.READ_PERMS,
         permissions.EXECUTE,
     ],
-    Modify: [
-        permissions.WRITE_DATA,
-        permissions.APPEND_DATA,
-        permissions.WRITE_ATTR,
-        permissions.WRITE_EXTENDED_ATTR,
-        permissions.DELETE,
-        permissions.DELETE_SUB,
-    ],
-    Full_control: [
+    // Modify: [
+    //     permissions.WRITE_DATA,
+    //     permissions.APPEND_DATA,
+    //     permissions.WRITE_ATTR,
+    //     permissions.WRITE_EXTENDED_ATTR,
+    //     permissions.DELETE,
+    //     permissions.DELETE_SUB,
+    // ],
+    Grant_All_Permissions: [
         permissions.LIST,
         permissions.READ_ATTR,
         permissions.READ_EXTENDED_ATTR,
@@ -74,7 +79,7 @@ permission_groups = {
     ],
 };
 perm_groupnames = Object.keys(permission_groups);
-perm_groupnames.push('Special_permissions');
+// perm_groupnames.push('Special_permissions');
 
 // Extra permission groups (this way Read, Write, Delete, Other make up the whole set; and are disjoint)
 // TODO/commit when??: WRITE_DATA should actually be in Write, also. [not in Other]
@@ -103,6 +108,40 @@ username_to_id = {};
 filepath_to_id = {};
 id_to_filepath = {};
 id_to_username = {};
+
+function updateUserPermissions() {
+    // Get the checked checkboxes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+    // Get the scenario
+    const scenario = document.getElementById('scenario').value;
+
+    // Get the user
+    const user = document.getElementById('user').value;
+
+    // Initialize the permissions
+    let permissions = '';
+
+    // Loop through the checked checkboxes and concatenate the values
+    checkboxes.forEach((checkbox, index) => {
+        permissions += checkbox.value;
+        if (index < checkboxes.length - 1) {
+            permissions += ';';
+        }
+    });
+
+    // Update the scenario solutions
+    scenario_solutions[scenario] = permissions;
+
+    // Update the result
+    document.getElementById('result').innerText = `Permissions updated for scenario "${scenario}" and user "${user}".`;
+}
+
+// Add event listeners to checkboxes
+const checkboxInputs = document.querySelectorAll('input[type="checkbox"]');
+checkboxInputs.forEach((checkbox) => {
+    checkbox.addEventListener('change', updateUserPermissions);
+});
 
 // Generate mappings from filepath to (integer) file id and from username to (integer) user id.
 function generate_file_user_ids() {
