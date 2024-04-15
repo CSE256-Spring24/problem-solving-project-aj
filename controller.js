@@ -36,13 +36,21 @@ permission_groups = {
         permissions.READ_PERMS,
         // permissions.EXECUTE,
     ],
-    Write: [
+    // Write: [
+    //     permissions.WRITE_DATA,
+    //     permissions.APPEND_DATA,
+    //     permissions.WRITE_ATTR,
+    //     permissions.WRITE_EXTENDED_ATTR,
+    // ],
+    // Delete: [
+    //     permissions.DELETE,
+    //     permissions.DELETE_SUB,
+    // ],
+    Make_Changes: [
         permissions.WRITE_DATA,
         permissions.APPEND_DATA,
         permissions.WRITE_ATTR,
         permissions.WRITE_EXTENDED_ATTR,
-    ],
-    Delete: [
         permissions.DELETE,
         permissions.DELETE_SUB,
     ],
@@ -53,14 +61,6 @@ permission_groups = {
         permissions.READ_PERMS,
         permissions.EXECUTE,
     ],
-    // Modify: [
-    //     permissions.WRITE_DATA,
-    //     permissions.APPEND_DATA,
-    //     permissions.WRITE_ATTR,
-    //     permissions.WRITE_EXTENDED_ATTR,
-    //     permissions.DELETE,
-    //     permissions.DELETE_SUB,
-    // ],
     Grant_All_Permissions: [
         permissions.LIST,
         permissions.READ_ATTR,
@@ -108,40 +108,6 @@ username_to_id = {};
 filepath_to_id = {};
 id_to_filepath = {};
 id_to_username = {};
-
-function updateUserPermissions() {
-    // Get the checked checkboxes
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-
-    // Get the scenario
-    const scenario = document.getElementById('scenario').value;
-
-    // Get the user
-    const user = document.getElementById('user').value;
-
-    // Initialize the permissions
-    let permissions = '';
-
-    // Loop through the checked checkboxes and concatenate the values
-    checkboxes.forEach((checkbox, index) => {
-        permissions += checkbox.value;
-        if (index < checkboxes.length - 1) {
-            permissions += ';';
-        }
-    });
-
-    // Update the scenario solutions
-    scenario_solutions[scenario] = permissions;
-
-    // Update the result
-    document.getElementById('result').innerText = `Permissions updated for scenario "${scenario}" and user "${user}".`;
-}
-
-// Add event listeners to checkboxes
-const checkboxInputs = document.querySelectorAll('input[type="checkbox"]');
-checkboxInputs.forEach((checkbox) => {
-    checkbox.addEventListener('change', updateUserPermissions);
-});
 
 // Generate mappings from filepath to (integer) file id and from username to (integer) user id.
 function generate_file_user_ids() {
@@ -208,6 +174,9 @@ function recompute_file_structure(display_files) {
 
     generate_file_user_ids();
     log_file_user_ids();
+
+    //Added 
+    update_visual_permissions();
 }
 recompute_file_structure(files);
 
@@ -422,6 +391,37 @@ function toggle_permission(filepath, username, permission, type, is_on) {
         remove_permissions(file_obj, user, [permission], is_allow_ace);
     }
 }
+
+//Added
+function update_visual_permissions() {
+    // This function should update the UI to reflect permissions
+    // Loop through each displayed file and update corresponding checkboxes
+    for (let file of display_files) {
+        update_file_permissions_ui(file);
+    }
+}
+
+function update_file_permissions_ui(file_obj) {
+    // Retrieve file permissions for each user and update UI checkboxes
+    for (let user in all_users) {
+        let grouped_perms = get_grouped_permissions(file_obj, user);
+        // Update UI checkboxes based on grouped_perms
+        // Example: Update checkboxes for 'Allow' and 'Deny' permissions
+        // You will need to implement this based on your UI framework (e.g., jQuery)
+        update_checkbox_state(user, 'Allow', grouped_perms.allow);
+        update_checkbox_state(user, 'Deny', grouped_perms.deny);
+    }
+}
+
+function update_checkbox_state(username, permissionType, permissions) {
+    // Example: Update checkboxes based on permissions object
+    for (let groupName in permissions) {
+        let isChecked = permissions[groupName].set;
+        // Update UI checkbox state based on isChecked
+        // Example: $('#checkbox-' + groupName + '-' + permissionType + '-' + username).prop('checked', isChecked);
+    }
+}
+//Add end 
 
 function validate_and_get_logs() {
     let scenario = $('#scenario_context').data('tag');
