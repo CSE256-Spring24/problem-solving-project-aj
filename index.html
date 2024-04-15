@@ -231,7 +231,144 @@
     </style>
     <div class="textbox">
         Click the "lock icon" next to the specific file/folder to change permissions
+    <br>
+    <br>
+    <style>
+        table {
+            /* width: 100%; */
+            border-collapse: collapse;
+            align-items: right;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Actual Permission</th>
+                <th>Read</th>
+                <th>Write</th>
+                <th>Delete</th>
+                <th>Execute</th>
+                <th>Grant_All_Control</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>traverse folder/execute file</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>list folder/read contents</td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>read attributes</td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>read extended attributes</td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>create files/write data</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>create folders/append data</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>write attributes</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>write extended attributes</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>delete subfolders and files</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>delete</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>read permissions</td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>change permissions</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>take ownership</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
+        </tbody>
+    </table>
     </div>
+ 
 </body>
 
 </html>
