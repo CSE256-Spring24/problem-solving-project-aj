@@ -42,15 +42,16 @@ permission_groups = {
     //     permissions.WRITE_ATTR,
     //     permissions.WRITE_EXTENDED_ATTR,
     // ],
-    // Delete: [
-    //     permissions.DELETE,
-    //     permissions.DELETE_SUB,
-    // ],
+
     Make_Changes: [
         permissions.WRITE_DATA,
         permissions.APPEND_DATA,
         permissions.WRITE_ATTR,
         permissions.WRITE_EXTENDED_ATTR,
+        permissions.DELETE,
+        permissions.DELETE_SUB,
+    ],
+    Delete: [
         permissions.DELETE,
         permissions.DELETE_SUB,
     ],
